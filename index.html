@@ -5,28 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Battle Dice</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+	<link rel="icon" href="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" type="image/gif"> <!-- Favicon -->
 </head>
 <body onload="initiate()">
     <!-- Pokémon Logo -->
     <img src="https://th.bing.com/th/id/OIP.Vw_KuEL919GZpSbyoeXw9gHaEK?rs=1&pid=ImgDetMain" alt="Pokemon Logo" class="logo">
-
-    <!-- Squirtle and Charmander on Top -->
-    <div class="pokemon-row">
+    <!-- Team above the dice (Away team) -->
+    <div class="team" id="awayTeam">
         <div class="pokemon-container">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif" alt="Squirtle" class="pokemon">
+            <img id="awaySquirtleImg" alt="Away Squirtle" class="pokemon">
             <div class="health-bar">
-                <div class="health-bar-fill" id="squirtle-health-top"></div>
+                <div class="health" id="awaySquirtleHealth"></div>
             </div>
         </div>
         <div class="pokemon-container">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif" alt="Charmander" class="pokemon">
+            <img id="awayCharmanderImg" alt="Away Charmander" class="pokemon">
             <div class="health-bar">
-                <div class="health-bar-fill" id="charmander-health-top"></div>
+                <div class="health" id="awayCharmanderHealth"></div>
             </div>
         </div>
-    </div>
-
-    <!-- Dice Container -->
+    </div>    
+	<!-- Dice Container -->
     <div class="container">
         <div id="dice-container">
             <div class="dice" id="dice">
@@ -40,27 +39,30 @@
                 <div id="dot8" class="dot"></div>
                 <div id="dot9" class="dot"></div>
             </div>
+			<!-- Attack Icon -->
+			<div id="attack-icon" style="display: none;">
+				<img src="https://img.icons8.com/ios/452/pokemon.png" alt="Attack Icon" style="width: 100px;">
+			</div>
 
             <!-- Button to trigger dice roll, initially below the dice -->
             <button id="roll-btn" onclick="rollDice()">Roll Dice</button>
         </div>
     </div>
-    <!-- Squirtle and Charmander on Bottom -->
-    <div class="pokemon-row">
+    <!-- Team below the dice (Home team) -->
+    <div class="team" id="homeTeam">
         <div class="pokemon-container">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif" alt="Squirtle" class="pokemon">
+            <img id="homeSquirtleImg" alt="Home Squirtle" class="pokemon">
             <div class="health-bar">
-                <div class="health-bar-fill" id="squirtle-health"></div>
+                <div class="health" id="homeSquirtleHealth"></div>
             </div>
         </div>
         <div class="pokemon-container">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif" alt="Charmander" class="pokemon">
+            <img id="homeCharmanderImg" alt="Home Charmander" class="pokemon">
             <div class="health-bar">
-                <div class="health-bar-fill" id="charmander-health"></div>
+                <div class="health" id="homeCharmanderHealth"></div>
             </div>
         </div>
     </div>
-
     <label for="bgColorPicker">Select Background Color: </label>
 	<input type="color" id="bgColorPicker" onchange="changeBackgroundColor(this.value)">
     <script src="script.js"></script> <!-- Link to external JS -->

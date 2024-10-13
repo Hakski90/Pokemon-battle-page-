@@ -23,6 +23,11 @@ body {
     max-width: 800px;
     padding: 20px;
 }
+.team {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
 
 .pokemon-container {
     display: flex;
@@ -30,19 +35,29 @@ body {
     align-items: center;
 }
 
-.pokemon {
-    width: 100px;
+.pokemon img {
+    width: 80px;
     height: auto;
 }
 
 .health-bar {
-    width: 120px;
-    height: 15px;
-    background-color: lightgray;
-    border-radius: 5px;
-    margin-top: 10px;
+    width: 100px;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin-top: 5px;
     position: relative;
-    overflow: hidden;
+}
+
+.health {
+    background-color: #4caf50;
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+.pokemon {
+    width: 100px;
+    height: auto;
 }
 
 .health-bar-fill {
