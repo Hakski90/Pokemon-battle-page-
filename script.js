@@ -23,7 +23,8 @@ function rollDice() {
 	toggleButtonPosition();  // Change the button's position
     var dots = document.querySelectorAll('.dot');
     dots.forEach(dot => dot.classList.remove('inactive-dot')); // Reset all dots to active
-
+    // Hide attack icon initially
+    document.getElementById('attack-icon').style.display = 'none';
     var rollInterval = setInterval(() => {
         let random = Math.floor(Math.random() * 6) + 1;
         showDiceFace(random);
@@ -35,6 +36,10 @@ function rollDice() {
         showDiceFace(finalNumber);    // Show the final rolled number
         rolling = false;
     }, 1000);  // The rolling animation lasts for 1 seconds
+	if (random > 3) {
+		// Show attack icon for rolls 4, 5, or 6
+		document.getElementById('attack-icon').style.display = 'block';
+	}
 }
 // Function to select a Pokémon for the team
 function selectPokemon(team, pokemon, imgElementId) {
@@ -44,8 +49,6 @@ function selectPokemon(team, pokemon, imgElementId) {
 function showDiceFace(number) {
     var dots = document.querySelectorAll('.dot');
     dots.forEach(dot => dot.classList.add('inactive-dot')); // Make all dots inactive
-    // Hide attack icon initially
-    document.getElementById('attack-icon').style.display = 'none';
     switch (number) {
         case 1:
             document.getElementById('dot5').classList.remove('inactive-dot'); // Center dot
@@ -64,8 +67,6 @@ function showDiceFace(number) {
             document.getElementById('dot3').classList.remove('inactive-dot'); // Top-right
             document.getElementById('dot7').classList.remove('inactive-dot'); // Bottom-left
             document.getElementById('dot9').classList.remove('inactive-dot'); // Bottom-right
-			// Show attack icon for rolls 4, 5, or 6
-            document.getElementById('attack-icon').style.display = 'block';
             break;
         case 5:
             document.getElementById('dot1').classList.remove('inactive-dot'); // Top-left
@@ -73,8 +74,6 @@ function showDiceFace(number) {
             document.getElementById('dot5').classList.remove('inactive-dot'); // Center
             document.getElementById('dot7').classList.remove('inactive-dot'); // Bottom-left
             document.getElementById('dot9').classList.remove('inactive-dot'); // Bottom-right
-			// Show attack icon for rolls 4, 5, or 6
-            document.getElementById('attack-icon').style.display = 'block';
             break;
         case 6:
             document.getElementById('dot1').classList.remove('inactive-dot'); // Top-left
@@ -83,8 +82,6 @@ function showDiceFace(number) {
             document.getElementById('dot6').classList.remove('inactive-dot'); // Middle-right
             document.getElementById('dot7').classList.remove('inactive-dot'); // Bottom-left
             document.getElementById('dot9').classList.remove('inactive-dot'); // Bottom-right
-			// Show attack icon for rolls 4, 5, or 6
-            document.getElementById('attack-icon').style.display = 'block';
             break;
     }
 }
