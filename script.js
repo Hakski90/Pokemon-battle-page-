@@ -20,26 +20,32 @@ function rollDice() {
     if (rolling) return;  // Prevent multiple clicks during animation
 
     rolling = true;
-	toggleButtonPosition();  // Change the button's position
+    toggleButtonPosition();  // Change the button's position
+
     var dots = document.querySelectorAll('.dot');
     dots.forEach(dot => dot.classList.remove('inactive-dot')); // Reset all dots to active
     // Hide attack icon initially
     document.getElementById('attack-icon').style.display = 'none';
+
+    // Rolling animation (show random dice face quickly)
     var rollInterval = setInterval(() => {
         let random = Math.floor(Math.random() * 6) + 1;
-        showDiceFace(random);
+        showDiceFace(random);  // Show a random dice face during the roll
     }, 100);  // Change dice face every 100ms to simulate rolling
 
+    // Final result after animation
     setTimeout(() => {
         clearInterval(rollInterval);  // Stop the rapid rolling animation
-        let finalNumber = Math.floor(Math.random() * 6) + 1;
+        let finalNumber = Math.floor(Math.random() * 6) + 1;  // Final dice number
         showDiceFace(finalNumber);    // Show the final rolled number
+
+        // Show attack icon only if the final number is 4, 5, or 6
+        if (finalNumber > 3) {
+            document.getElementById('attack-icon').style.display = 'block';
+        }
+
         rolling = false;
     }, 1000);  // The rolling animation lasts for 1 seconds
-	if (random > 3) {
-		// Show attack icon for rolls 4, 5, or 6
-		document.getElementById('attack-icon').style.display = 'block';
-	}
 }
 // Function to select a Pokémon for the team
 function selectPokemon(team, pokemon, imgElementId) {
