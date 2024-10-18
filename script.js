@@ -1,21 +1,58 @@
 let rolling = false;
 let buttonAbove = false;  // Track if the button is above or below
-let homeTeam = {
-    squirtle: 100,
-    charmander: 100
-};
+let homeSelection = [];
+let awaySelection = [];
 
-let awayTeam = {
-    squirtle: 100,
-    charmander: 100
-};
+function selectPokemonForTeam(team, pokemon) {
+    if (team === 'home' && homeSelection.length < 2) {
+        homeSelection.push(pokemon);
+    } else if (team === 'away' && awaySelection.length < 2) {
+        awaySelection.push(pokemon);
+    }
+
+    // Once both teams have selected 2 Pokémon, enable the Start Battle button
+    if (homeSelection.length === 2 && awaySelection.length === 2) {
+        document.getElementById('start-battle-btn').disabled = false;
+    }
+}
+
+// Start battle function to switch to the battle screen with selected Pokémon
+function startBattle() {
+    localStorage.setItem('homeTeam', JSON.stringify(homeSelection));
+    localStorage.setItem('awayTeam', JSON.stringify(awaySelection));
+    window.location.href = 'index.html';  // Redirect to the battle page
+}
+
+function loadSelectedTeams() {
+    const homeTeamSelected = JSON.parse(localStorage.getItem('homeTeam'));
+    const awayTeamSelected = JSON.parse(localStorage.getItem('awayTeam'));
+
+    if (homeTeamSelected && awayTeamSelected) {
+        // Set selected Pokémon images
+        selectPokemon('home', homeTeamSelected[0], 'homeSquirtleImg');
+        selectPokemon('home', homeTeamSelected[1], 'homeCharmanderImg');
+        selectPokemon('away', awayTeamSelected[0], 'awaySquirtleImg');
+        selectPokemon('away', awayTeamSelected[1], 'awayCharmanderImg');
+    }
+}
+
+// Add a restart button that goes back to team selection
+function addRestartButton() {
+    const restartButton = document.createElement('button');
+    restartButton.innerText = 'Restart';
+    restartButton.classList.add('restart-button');
+    restartButton.onclick = () => window.location.href = 'select-teams.html';
+    document.body.appendChild(restartButton);
+}
+
+// Call loadSelectedTeams() on page load to apply the chosen teams
 document.addEventListener('DOMContentLoaded', function () {
-    // Set default Pokémon (Squirtle and Charmander for both teams)
-    selectPokemon('home', 'squirtle', 'homeSquirtleImg');
-    selectPokemon('home', 'charmander', 'homeCharmanderImg');
-    selectPokemon('away', 'squirtle', 'awaySquirtleImg');
-    selectPokemon('away', 'charmander', 'awayCharmanderImg');
+    if (window.location.pathname.includes('index.html')) {
+        loadSelectedTeams();  // Load selected Pokémon into the battle screen
+        addRestartButton();    // Add the restart button on the battle screen
+    }
 });
+
 function rollDice() {
     if (rolling) return;  // Prevent multiple clicks during animation
 

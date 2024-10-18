@@ -113,6 +113,43 @@ body {
 .inactive-dot {
     background-color: inherit;
 }
+.pokemon-options img {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.pokemon-options img:hover {
+    transform: scale(1.1);
+}
+
+#start-battle-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.restart-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.restart-button:hover {
+    background-color: #cc0000;
+}
 
 button {
     padding: 10px 20px;

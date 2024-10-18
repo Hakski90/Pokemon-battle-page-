@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Teams</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+    <script src="script.js"></script> <!-- Link to external JS -->
+</head>
+<body>
+    <h1>Select Your Team</h1>
+
+    <!-- Away Team Selection -->
+    <div class="team-selection">
+        <h2>Away Team: Choose 2 Pokémon</h2>
+        <div class="pokemon-options">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif" alt="Squirtle" onclick="selectPokemonForTeam('away', 'squirtle')">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif" alt="Charmander" onclick="selectPokemonForTeam('away', 'charmander')">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" alt="Pikachu" onclick="selectPokemonForTeam('away', 'pikachu')">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" alt="Bulbasaur" onclick="selectPokemonForTeam('away', 'bulbasaur')">
+        </div>
+    </div>
+
+    <!-- Home Team Selection -->
+    <div class="team-selection">
+        <h2>Home Team: Choose 2 Pokémon</h2>
+        <div class="pokemon-options">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif" alt="Squirtle" onclick="selectPokemonForTeam('home', 'squirtle')">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif" alt="Charmander" onclick="selectPokemonForTeam('home', 'charmander')">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" alt="Pikachu" onclick="selectPokemonForTeam('home', 'pikachu')">
+            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" alt="Bulbasaur" onclick="selectPokemonForTeam('home', 'bulbasaur')">
+        </div>
+    </div>
+
+    <!-- Start Battle Button -->
+    <button id="start-battle-btn" onclick="startBattle()" disabled>Start Battle</button>
+</body>
+</html>
