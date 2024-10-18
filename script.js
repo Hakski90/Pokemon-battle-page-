@@ -4,37 +4,75 @@ let homeSelection = [];
 let awaySelection = [];
 
 function selectPokemonForTeam(team, pokemon) {
-    if (team === 'home' && homeSelection.length < 2) {
-        homeSelection.push(pokemon);
-    } else if (team === 'away' && awaySelection.length < 2) {
-        awaySelection.push(pokemon);
-    }
+    let teamSelection = team === 'home' ? homeSelection : awaySelection;
+    
+    if (teamSelection.length < 2) {
+        teamSelection.push(pokemon);
 
-    // Once both teams have selected 2 Pokémon, enable the Start Battle button
+        // Add the highlight to the selected Pokémon image
+        document.querySelectorAll(`.${team}-pokemon`).forEach(img => {
+            if (img.alt.toLowerCase().includes(pokemon)) {
+                img.classList.add('selected');
+            }
+        });
+    }
+    
+    // Enable the Start Battle button when both teams have selected 2 Pokémon
     if (homeSelection.length === 2 && awaySelection.length === 2) {
         document.getElementById('start-battle-btn').disabled = false;
     }
 }
 
-// Start battle function to switch to the battle screen with selected Pokémon
+// After team selection, go to battle.html
 function startBattle() {
     localStorage.setItem('homeTeam', JSON.stringify(homeSelection));
     localStorage.setItem('awayTeam', JSON.stringify(awaySelection));
-    window.location.href = 'index.html';  // Redirect to the battle page
+    window.location.href = 'battle.html';  // Redirect to battle screen
 }
-
+// Function to switch the positions of two Pokémon
+function switchPokemonPosition(team) {
+    const firstPokemonImg = document.getElementById(`${team}Pokemon1`);
+    const secondPokemonImg = document.getElementById(`${team}Pokemon2`);
+    
+    // Swap the image sources
+    const tempSrc = firstPokemonImg.src;
+    firstPokemonImg.src = secondPokemonImg.src;
+    secondPokemonImg.src = tempSrc;
+    
+    // Swap the health bar values
+    const firstHealthBar = document.getElementById(`${team}Pokemon1Health`);
+    const secondHealthBar = document.getElementById(`${team}Pokemon2Health`);
+    
+    const tempHealthWidth = firstHealthBar.style.width;
+    firstHealthBar.style.width = secondHealthBar.style.width;
+    secondHealthBar.style.width = tempHealthWidth;
+}
 function loadSelectedTeams() {
     const homeTeamSelected = JSON.parse(localStorage.getItem('homeTeam'));
     const awayTeamSelected = JSON.parse(localStorage.getItem('awayTeam'));
 
     if (homeTeamSelected && awayTeamSelected) {
-        // Set selected Pokémon images
-        selectPokemon('home', homeTeamSelected[0], 'homeSquirtleImg');
-        selectPokemon('home', homeTeamSelected[1], 'homeCharmanderImg');
-        selectPokemon('away', awayTeamSelected[0], 'awaySquirtleImg');
-        selectPokemon('away', awayTeamSelected[1], 'awayCharmanderImg');
+        // Load the images for home team
+        selectPokemon('home', homeTeamSelected[0], 'homePokemon1');
+        selectPokemon('home', homeTeamSelected[1], 'homePokemon2');
+
+        // Load the images for away team
+        selectPokemon('away', awayTeamSelected[0], 'awayPokemon1');
+        selectPokemon('away', awayTeamSelected[1], 'awayPokemon2');
     }
 }
+
+// Ensure the Pokémon images are correctly loaded based on team
+function selectPokemon(team, pokemon, imgElementId) {
+    const pokemonImageUrl = `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon}.gif`;
+    document.getElementById(imgElementId).src = pokemonImageUrl;
+}
+
+// Call loadSelectedTeams on page load to apply the chosen teams
+document.addEventListener('DOMContentLoaded', function () {
+    loadSelectedTeams();  // Load selected Pokémon into the battle screen
+	addRestartButton();    // Add the restart button on the battle screen
+});
 
 // Add a restart button that goes back to team selection
 function addRestartButton() {
@@ -45,19 +83,11 @@ function addRestartButton() {
     document.body.appendChild(restartButton);
 }
 
-// Call loadSelectedTeams() on page load to apply the chosen teams
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.location.pathname.includes('index.html')) {
-        loadSelectedTeams();  // Load selected Pokémon into the battle screen
-        addRestartButton();    // Add the restart button on the battle screen
-    }
-});
 
 function rollDice() {
     if (rolling) return;  // Prevent multiple clicks during animation
 
     rolling = true;
-    toggleButtonPosition();  // Change the button's position
 
     var dots = document.querySelectorAll('.dot');
     dots.forEach(dot => dot.classList.remove('inactive-dot')); // Reset all dots to active
@@ -76,19 +106,65 @@ function rollDice() {
         let finalNumber = Math.floor(Math.random() * 6) + 1;  // Final dice number
         showDiceFace(finalNumber);    // Show the final rolled number
 
-        // Show attack icon only if the final number is 4, 5, or 6
         if (finalNumber > 3) {
-            document.getElementById('attack-icon').style.display = 'block';
+            document.getElementById('attack-icon').style.display = 'block';  // Show attack icon
+            
+            // Determine which team is attacking and apply damage to the other team
+            const attackingTeam = getAttackingTeam();  // Example logic for deciding which team attacks
+            applyDamage(attackingTeam === 'home' ? 'away' : 'home');  // Apply damage to the opposing team
         }
-
+		toggleButtonPosition();  // Change the button's position
         rolling = false;
     }, 1000);  // The rolling animation lasts for 1 seconds
 }
-// Function to select a Pokémon for the team
-function selectPokemon(team, pokemon, imgElementId) {
-    const pokemonImageUrl = `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon}.gif`;
-    document.getElementById(imgElementId).src = pokemonImageUrl;
+function getAttackingTeam() {
+	if (buttonAbove) {
+		return 'away';
+	} else {
+		return 'home';
+	}
 }
+
+// Function to apply damage to the opposing team's first Pokémon
+function applyDamage(defendingTeam) {
+    const firstPokemonHealth = document.getElementById(`${defendingTeam}Pokemon1Health`);
+    let currentHealth = parseFloat(firstPokemonHealth.style.width) || 100;
+    let newHealth = currentHealth -50;  // Reduce health by 50%
+
+    if (newHealth <= 0) {
+        firstPokemonHealth.style.width = '0%';  // Set health to 0
+        // If Pokémon 1's health is 0, switch with Pokémon 2
+        switchPokemonPosition(defendingTeam);
+
+        // Check if both Pokémon's health is 0, and trigger winning animation if so
+        const secondPokemonHealth = document.getElementById(`${defendingTeam}Pokemon1Health`).style.width;
+        if (parseFloat(secondPokemonHealth) <= 0) {
+            triggerWinningAnimation(defendingTeam === 'home' ? 'away' : 'home');  // The other team wins
+        }
+    } else {
+        firstPokemonHealth.style.width = `${newHealth}%`;  // Update health bar width
+    }
+}
+// Function to trigger winning animation
+function triggerWinningAnimation(winningTeam) {    
+    // Create fireworks container
+    const fireworksContainer = document.createElement('div');
+    fireworksContainer.classList.add('fireworks-container');
+    document.body.appendChild(fireworksContainer);
+
+    // Add multiple firework elements
+    for (let i = 0; i < 5; i++) {
+        const firework = document.createElement('div');
+        firework.classList.add('firework');
+        fireworksContainer.appendChild(firework);
+    }
+
+    // Play fireworks animation
+    setTimeout(() => {
+        fireworksContainer.remove();  // Remove the animation after 5 seconds
+    }, 5000);
+}
+
 function showDiceFace(number) {
     var dots = document.querySelectorAll('.dot');
     dots.forEach(dot => dot.classList.add('inactive-dot')); // Make all dots inactive

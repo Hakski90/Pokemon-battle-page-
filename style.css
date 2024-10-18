@@ -9,24 +9,21 @@ body {
     background-color: #f4f4f4;
 }
 
-.logo {
-    width: 50%;
-    max-width: 500px;
-    margin: 20px auto;
-}
-
-.pokemon-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    max-width: 800px;
-    padding: 20px;
-}
 .team {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     margin: 20px 0;
+}
+
+.away-team {
+    flex-direction: row;  /* Arrange Pokémon side by side above the dice */
+    margin-bottom: 20px;
+}
+
+.home-team {
+    flex-direction: row;  /* Arrange Pokémon side by side below the dice */
+    margin-top: 20px;
 }
 
 .pokemon-container {
@@ -35,9 +32,49 @@ body {
     align-items: center;
 }
 
-.pokemon img {
-    width: 80px;
-    height: auto;
+.pokemon {
+    width: 100px;
+    height: 100px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 20px auto;  /* Centering the dice */
+}
+
+.dice {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 3px solid black;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+}
+
+.inactive-dot {
+    background-color: inherit;
+}
+
+.logo {
+    width: 50%;
+    max-width: 500px;
+    margin: 20px auto;
 }
 
 .health-bar {
@@ -55,64 +92,7 @@ body {
     border-radius: 10px;
     transition: width 0.5s ease;
 }
-.pokemon {
-    width: 100px;
-    height: auto;
-}
 
-.health-bar-fill {
-    height: 100%;
-    background-color: green;
-    width: 100%;
-    transition: width 0.5s ease;
-}
-
-.containerv2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    max-width: 800px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin: 20px 0;
-}
-.container {
-	text-align: center;
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-.dice {
-	width: 100px;
-	height: 100px;
-	margin: 20px auto;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(3, 1fr);
-	position: relative;
-	border: 3px solid black;
-	border-radius: 15px;
-	background-color: white;
-	padding: 10px;
-	box-sizing: border-box;
-}
-.dot {
-    width: 20px;
-    height: 20px;
-    background-color: black;
-    border-radius: 50%;
-    justify-self: center;
-    align-self: center;
-}
-
-.inactive-dot {
-    background-color: inherit;
-}
 .pokemon-options img {
     width: 100px;
     height: auto;
@@ -122,6 +102,12 @@ body {
 
 .pokemon-options img:hover {
     transform: scale(1.1);
+}
+
+.pokemon-options img.selected {
+    border: 3px solid blue;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.7);
 }
 
 #start-battle-btn {
@@ -166,3 +152,53 @@ button {
 button:hover {
     background-color: #45a049;
 }
+/* Fireworks Animation */
+.fireworks-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 20px;
+    z-index: 9999;  /* Ensure it's above other elements */
+}
+
+.firework {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    animation: explode 1s ease infinite;
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0.1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(2);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+}
+
+.firework:nth-child(1) {
+    animation-delay: 0s;
+}
+.firework:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.firework:nth-child(3) {
+    animation-delay: 0.4s;
+}
+.firework:nth-child(4) {
+    animation-delay: 0.6s;
+}
+.firework:nth-child(5) {
+    animation-delay: 0.8s;
+}
+

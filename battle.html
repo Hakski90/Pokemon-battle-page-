@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Battle Dice</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+	<link rel="icon" href="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" type="image/gif"> <!-- Favicon -->
+</head>
+<body onload="initiate()">
+    <!-- Pokémon Logo -->
+    <img src="https://th.bing.com/th/id/OIP.Vw_KuEL919GZpSbyoeXw9gHaEK?rs=1&pid=ImgDetMain" alt="Pokemon Logo" class="logo">
+
+    <!-- Team above the dice (Away team) -->
+	<div class="team away-team">
+		<div class="pokemon-container">
+			<img id="awayPokemon1" alt="Away Pokemon 1" class="pokemon" onclick="switchPokemonPosition('away')">
+			<div class="health-bar">
+				<div class="health" id="awayPokemon1Health"></div>
+			</div>
+		</div>
+		<div class="pokemon-container">
+			<img id="awayPokemon2" alt="Away Pokemon 2" class="pokemon" onclick="switchPokemonPosition('away')">
+			<div class="health-bar">
+				<div class="health" id="awayPokemon2Health"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Dice Container -->
+    <div class="container">
+        <div id="dice-container">
+            <div class="dice" id="dice">
+                <div id="dot1" class="dot"></div>
+                <div id="dot2" class="dot"></div>
+                <div id="dot3" class="dot"></div>
+                <div id="dot4" class="dot"></div>
+                <div id="dot5" class="dot"></div>
+                <div id="dot6" class="dot"></div>
+                <div id="dot7" class="dot"></div>
+                <div id="dot8" class="dot"></div>
+                <div id="dot9" class="dot"></div>
+            </div>
+			<!-- Attack Icon -->
+			<div id="attack-icon" style="display: none;">
+				<img src="https://cdn2.iconfinder.com/data/icons/game-essential-soft-style/512/sword-1024.png" alt="Attack Icon" style="width: 100px;">
+			</div>
+
+            <!-- Button to trigger dice roll, initially below the dice -->
+            <button id="roll-btn" onclick="rollDice()">Roll Dice</button>
+        </div>
+    </div>
+
+    <!-- Team below the dice (Home team) -->
+	<div class="team home-team">
+		<div class="pokemon-container">
+			<img id="homePokemon1" alt="Home Pokemon 1" class="pokemon" onclick="switchPokemonPosition('home')">
+			<div class="health-bar">
+				<div class="health" id="homePokemon1Health"></div>
+			</div>
+		</div>
+		<div class="pokemon-container">
+			<img id="homePokemon2" alt="Home Pokemon 2" class="pokemon" onclick="switchPokemonPosition('home')">
+			<div class="health-bar">
+				<div class="health" id="homePokemon2Health"></div>
+			</div>
+		</div>
+	</div>
+    
+    <label for="bgColorPicker">Select Background Color: </label>
+	<input type="color" id="bgColorPicker" onchange="changeBackgroundColor(this.value)">
+    
+    <script src="script.js"></script> <!-- Link to external JS -->
+</body>
+</html>
