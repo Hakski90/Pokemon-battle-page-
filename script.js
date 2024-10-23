@@ -5,18 +5,30 @@ let awaySelection = [];
 
 function selectPokemonForTeam(team, pokemon) {
     let teamSelection = team === 'home' ? homeSelection : awaySelection;
-    
-    if (teamSelection.length < 2) {
-        teamSelection.push(pokemon);
 
-        // Add the highlight to the selected Pokémon image
+    // If the team has already selected 2 Pokémon, replace the oldest one
+    if (teamSelection.length >= 2) {
+        // Remove the first Pokémon from the selection (oldest one)
+        const removedPokemon = teamSelection.shift();
+        
+        // Remove the 'selected' class from the removed Pokémon's image
         document.querySelectorAll(`.${team}-pokemon`).forEach(img => {
-            if (img.alt.toLowerCase().includes(pokemon)) {
-                img.classList.add('selected');
+            if (img.alt.toLowerCase().includes(removedPokemon)) {
+                img.classList.remove('selected');
             }
         });
     }
-    
+
+    // Add the new Pokémon to the selection
+    teamSelection.push(pokemon);
+
+    // Highlight the newly selected Pokémon image
+    document.querySelectorAll(`.${team}-pokemon`).forEach(img => {
+        if (img.alt.toLowerCase().includes(pokemon)) {
+            img.classList.add('selected');
+        }
+    });
+
     // Enable the Start Battle button when both teams have selected 2 Pokémon
     if (homeSelection.length === 2 && awaySelection.length === 2) {
         document.getElementById('start-battle-btn').disabled = false;

@@ -8,7 +8,10 @@ body {
     margin: 0;
     background-color: #f4f4f4;
 }
-
+.team-selection {
+    text-align: center;
+    margin-bottom: 20px;
+}
 .team {
     display: flex;
     justify-content: center;
@@ -92,22 +95,38 @@ body {
     border-radius: 10px;
     transition: width 0.5s ease;
 }
+.pokemon-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;   /* Allow wrapping if the screen is too small */
+    gap: 10px;         /* Add space between the Pokémon images */
+    width: 100%;       /* Take up full width of the container */
+}
 
+/* Responsive image sizes */
 .pokemon-options img {
-    width: 100px;
+    width: 15vw;       /* 15% of the viewport width for each Pokémon */
     height: auto;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
 .pokemon-options img:hover {
-    transform: scale(1.1);
+    transform: scale(1.1);   /* Slightly enlarge on hover */
 }
 
 .pokemon-options img.selected {
     border: 3px solid blue;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.7);
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 600px) {
+    .pokemon-options img {
+        width: 30vw;   /* Make the Pokémon images bigger on smaller screens */
+    }
 }
 #attack-icon {
     position: absolute;
