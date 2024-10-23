@@ -71,18 +71,18 @@ function selectPokemon(team, pokemon, imgElementId) {
 // Call loadSelectedTeams on page load to apply the chosen teams
 document.addEventListener('DOMContentLoaded', function () {
     loadSelectedTeams();  // Load selected Pokémon into the battle screen
-	addRestartButton();    // Add the restart button on the battle screen
+	addRestartIcon();    // Add the restart button on the battle screen
 });
 
 // Add a restart button that goes back to team selection
-function addRestartButton() {
-    const restartButton = document.createElement('button');
-    restartButton.innerText = 'Restart';
-    restartButton.classList.add('restart-button');
-    restartButton.onclick = () => window.location.href = 'select-teams.html';
-    document.body.appendChild(restartButton);
+function addRestartIcon() {
+    const restartIcon = document.createElement('img');
+    restartIcon.src = 'restart.png';  // Use the local image for the restart icon
+    restartIcon.alt = 'Restart';
+    restartIcon.classList.add('restart-icon');  // Add styling class
+    restartIcon.onclick = () => window.location.href = 'index.html';  // Redirect to the index page
+    document.body.appendChild(restartIcon);  // Ensure it gets appended to the DOM
 }
-
 
 function rollDice() {
     if (rolling) return;  // Prevent multiple clicks during animation
@@ -91,8 +91,7 @@ function rollDice() {
 
     var dots = document.querySelectorAll('.dot');
     dots.forEach(dot => dot.classList.remove('inactive-dot')); // Reset all dots to active
-    // Hide attack icon initially
-    document.getElementById('attack-icon').style.display = 'none';
+    document.getElementById('attack-icon').style.display = 'none'; // Hide attack icon initially
 
     // Rolling animation (show random dice face quickly)
     var rollInterval = setInterval(() => {
@@ -107,15 +106,21 @@ function rollDice() {
         showDiceFace(finalNumber);    // Show the final rolled number
 
         if (finalNumber > 3) {
-            document.getElementById('attack-icon').style.display = 'block';  // Show attack icon
-            
+            // Show attack icon for 3 seconds next to the dice
+            const attackIcon = document.getElementById('attack-icon');
+            attackIcon.style.display = 'block';
+            setTimeout(() => {
+                attackIcon.style.display = 'none';  // Hide after 3 seconds
+            }, 3000);  // Display for 3 seconds
+
             // Determine which team is attacking and apply damage to the other team
-            const attackingTeam = getAttackingTeam();  // Example logic for deciding which team attacks
-            applyDamage(attackingTeam === 'home' ? 'away' : 'home');  // Apply damage to the opposing team
+            const attackingTeam = getAttackingTeam();
+            applyDamage(attackingTeam === 'home' ? 'away' : 'home');
         }
-		toggleButtonPosition();  // Change the button's position
+
+        toggleButtonPosition();  // Change the button's position
         rolling = false;
-    }, 1000);  // The rolling animation lasts for 1 seconds
+    }, 1000);  // The rolling animation lasts for 1 second
 }
 function getAttackingTeam() {
 	if (buttonAbove) {
@@ -145,7 +150,7 @@ function applyDamage(defendingTeam) {
         firstPokemonHealth.style.width = `${newHealth}%`;  // Update health bar width
     }
 }
-// Function to trigger winning animation
+// Function to trigger winning animation with sound
 function triggerWinningAnimation(winningTeam) {    
     // Create fireworks container
     const fireworksContainer = document.createElement('div');
@@ -159,12 +164,15 @@ function triggerWinningAnimation(winningTeam) {
         fireworksContainer.appendChild(firework);
     }
 
+    // Play fireworks sound
+    const fireworkSound = new Audio('firework.mp3');
+    fireworkSound.play();
+
     // Play fireworks animation
     setTimeout(() => {
         fireworksContainer.remove();  // Remove the animation after 5 seconds
     }, 5000);
 }
-
 function showDiceFace(number) {
     var dots = document.querySelectorAll('.dot');
     dots.forEach(dot => dot.classList.add('inactive-dot')); // Make all dots inactive

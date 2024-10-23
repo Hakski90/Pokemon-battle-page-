@@ -26,30 +26,29 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- Dice Container -->
-    <div class="container">
-        <div id="dice-container">
-            <div class="dice" id="dice">
-                <div id="dot1" class="dot"></div>
-                <div id="dot2" class="dot"></div>
-                <div id="dot3" class="dot"></div>
-                <div id="dot4" class="dot"></div>
-                <div id="dot5" class="dot"></div>
-                <div id="dot6" class="dot"></div>
-                <div id="dot7" class="dot"></div>
-                <div id="dot8" class="dot"></div>
-                <div id="dot9" class="dot"></div>
-            </div>
-			<!-- Attack Icon -->
-			<div id="attack-icon" style="display: none;">
-				<img src="https://cdn2.iconfinder.com/data/icons/game-essential-soft-style/512/sword-1024.png" alt="Attack Icon" style="width: 100px;">
+	<div class="container">
+		<div id="dice-container" style="position: relative;"> <!-- Add relative positioning here -->
+			<div class="dice" id="dice" onclick="rollDice()">
+				<div id="dot1" class="dot"></div>
+				<div id="dot2" class="dot"></div>
+				<div id="dot3" class="dot"></div>
+				<div id="dot4" class="dot"></div>
+				<div id="dot5" class="dot"></div>
+				<div id="dot6" class="dot"></div>
+				<div id="dot7" class="dot"></div>
+				<div id="dot8" class="dot"></div>
+				<div id="dot9" class="dot"></div>
+			</div>
+			<!-- Attack Icon positioned within the dice-container -->
+			<div id="attack-icon" style="display: none; position: absolute;">
+				<img src="https://cdn2.iconfinder.com/data/icons/game-essential-soft-style/512/sword-1024.png" alt="Attack Icon" style="width: 50px;">
 			</div>
 
-            <!-- Button to trigger dice roll, initially below the dice -->
-            <button id="roll-btn" onclick="rollDice()">Roll Dice</button>
-        </div>
-    </div>
+			<!-- Button to trigger dice roll, initially below the dice -->
+			<button id="roll-btn" onclick="rollDice()">Roll Dice</button>
+		</div>
+	</div>
 
     <!-- Team below the dice (Home team) -->
 	<div class="team home-team">
