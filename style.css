@@ -21,12 +21,12 @@ body {
 
 .away-team {
     flex-direction: row;  /* Arrange Pokémon side by side above the dice */
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .home-team {
     flex-direction: row;  /* Arrange Pokémon side by side below the dice */
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 .pokemon-container {
@@ -46,13 +46,13 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 20px auto;  /* Centering the dice */
+    margin: 5px auto;  /* Centering the dice */
 }
 
 .dice {
     width: 80px;
     height: 80px;
-    margin: 10px auto;
+    margin: 2px auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -106,7 +106,7 @@ body {
 
 /* Responsive image sizes */
 .pokemon-options img {
-    width: 10vw;       /* 15% of the viewport width for each Pokémon */
+    width: 10vw;       /* 10% of the viewport width for each Pokémon */
     height: auto;
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -170,7 +170,8 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 20px;
+    margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 button:hover {
