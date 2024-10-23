@@ -50,9 +50,9 @@ body {
 }
 
 .dice {
-    width: 100px;
-    height: 100px;
-    margin: 20px auto;
+    width: 80px;
+    height: 80px;
+    margin: 10px auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -75,9 +75,9 @@ body {
 }
 
 .logo {
-    width: 50%;
+    width: 35%;
     max-width: 500px;
-    margin: 20px auto;
+    margin: 10px auto;
 }
 
 .health-bar {
@@ -106,7 +106,7 @@ body {
 
 /* Responsive image sizes */
 .pokemon-options img {
-    width: 15vw;       /* 15% of the viewport width for each Pokémon */
+    width: 10vw;       /* 15% of the viewport width for each Pokémon */
     height: auto;
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -162,7 +162,7 @@ body {
 }
 
 button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     font-size: 18px;
     border: none;
     background-color: #4CAF50;
