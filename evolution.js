@@ -28,9 +28,16 @@ async function evolvePokemon(pokemonId) {
 
     if (nextEvolution) {
         pokemonImg.src = `https://img.pokemondb.net/sprites/black-white/anim/normal/${nextEvolution}.gif`;
-    } else {
-        alert(`${currentPokemon} cannot evolve further!`);
-    }
+	}else {
+		const imageExists = await checkPokemonImage(currentPokemon);
+		if (imageExists) {
+			pokemonImg.src = `https://img.pokemondb.net/sprites/home/normal/${currentPokemon}-gigantamax.png`;
+		} else if (currentPokemon === 'raichu'){
+			pokemonImg.src = `https://img.pokemondb.net/sprites/home/normal/pikachu-gigantamax.png`;
+		}else {
+			alert(`${currentPokemon} cannot evolve further!`);
+		}
+	}
 }
 
 function handleEvolveButtonVisibility(attackingTeam) {
@@ -42,4 +49,20 @@ function handleEvolveButtonVisibility(attackingTeam) {
         const evolveBtnId = `${attackingTeam}Pokemon1Evolve`;  // Always show for Pokemon1
         document.getElementById(evolveBtnId).style.display = 'block';
     }
+}
+function checkPokemonImage(currentPokemon) {
+    return new Promise((resolve) => {
+        const imageUrl = `https://img.pokemondb.net/sprites/home/normal/${currentPokemon}-gigantamax.png`;
+        const img = new Image();
+
+        img.onload = function() {
+            resolve(true);
+        };
+
+        img.onerror = function() {
+            resolve(false);
+        };
+
+        img.src = imageUrl;
+    });
 }
