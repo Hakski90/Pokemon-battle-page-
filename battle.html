@@ -6,6 +6,10 @@
     <title>Pokemon Battle Dice</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
 	<link rel="icon" href="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" type="image/gif"> <!-- Favicon -->
+	<script src="common.js"></script>      <!-- Handles shared functions like restart and animations -->
+    <script src="teamSelection.js"></script>
+	<script src="battleLogic.js"></script> <!-- Handles dice rolls, damage, and team switches -->
+    <script src="evolution.js"></script>   <!-- Handles evolution logic for the Pokémon -->
 </head>
 <body onload="initiate()">
     <!-- Pokémon Logo -->
@@ -18,12 +22,16 @@
 			<div class="health-bar">
 				<div class="health" id="awayPokemon1Health"></div>
 			</div>
+			<!-- Evolve Button -->
+			<img src="https://digistatement.com/wp-content/uploads/2020/08/Mega-Evolution-Symbol.png" alt="Evolve" class="evolve-btn" id="awayPokemon1Evolve" onclick="evolvePokemon('awayPokemon1')">
 		</div>
 		<div class="pokemon-container">
 			<img id="awayPokemon2" alt="Away Pokemon 2" class="pokemon" onclick="switchPokemonPosition('away')">
 			<div class="health-bar">
 				<div class="health" id="awayPokemon2Health"></div>
 			</div>
+			<!-- Evolve Button -->
+			<img src="https://digistatement.com/wp-content/uploads/2020/08/Mega-Evolution-Symbol.png" alt="Evolve" class="evolve-btn" id="awayPokemon2Evolve" onclick="evolvePokemon('awayPokemon2')">
 		</div>
 	</div>
 	<!-- Dice Container -->
@@ -51,24 +59,38 @@
 	</div>
 
     <!-- Team below the dice (Home team) -->
+	<!-- Home Team -->
 	<div class="team home-team">
 		<div class="pokemon-container">
-			<img id="homePokemon1" alt="Home Pokemon 1" class="pokemon" onclick="switchPokemonPosition('home')">
+			<img id="homePokemon1" alt="Home Pokemon 1" class="pokemon">
 			<div class="health-bar">
 				<div class="health" id="homePokemon1Health"></div>
 			</div>
+			<!-- Evolve Button -->
+			<img src="https://digistatement.com/wp-content/uploads/2020/08/Mega-Evolution-Symbol.png" alt="Evolve" class="evolve-btn" id="homePokemon1Evolve" onclick="evolvePokemon('homePokemon1')">
 		</div>
 		<div class="pokemon-container">
-			<img id="homePokemon2" alt="Home Pokemon 2" class="pokemon" onclick="switchPokemonPosition('home')">
+			<img id="homePokemon2" alt="Home Pokemon 2" class="pokemon">
 			<div class="health-bar">
 				<div class="health" id="homePokemon2Health"></div>
 			</div>
+			<!-- Evolve Button -->
+			<img src="https://digistatement.com/wp-content/uploads/2020/08/Mega-Evolution-Symbol.png" alt="Evolve" class="evolve-btn" id="homePokemon2Evolve" onclick="evolvePokemon('homePokemon2')">
 		</div>
 	</div>
     
     <label for="bgColorPicker">Select Background Color: </label>
 	<input type="color" id="bgColorPicker" onchange="changeBackgroundColor(this.value)">
-    
-    <script src="script.js"></script> <!-- Link to external JS -->
+  
+	<script>
+		// Call loadSelectedTeams on page load to apply the chosen teams
+		document.addEventListener('DOMContentLoaded', function () {
+			loadSelectedTeams();  // Load selected Pokémon into the battle screen
+			addRestartIcon();    // Add the restart button on the battle screen
+			document.querySelectorAll('.evolve-btn').forEach(btn => {
+				btn.style.display = 'none';
+			});
+		});
+	</script>
 </body>
 </html>

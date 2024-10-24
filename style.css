@@ -8,6 +8,12 @@ body {
     margin: 0;
     background-color: #f4f4f4;
 }
+.evolve-btn {
+    width: 20px;  /* Small size */
+    height: 20px;
+    cursor: pointer;
+    margin-top: 5px;  /* Add space between the button and the health bar */
+}
 .team-selection {
     text-align: center;
     margin-bottom: 20px;
@@ -125,7 +131,7 @@ body {
 /* Media query for mobile responsiveness */
 @media (max-width: 600px) {
     .pokemon-options img {
-        width: 30vw;   /* Make the Pokémon images bigger on smaller screens */
+        width: 10vw;   /* Make the Pokémon images bigger on smaller screens */
     }
 }
 #attack-icon {

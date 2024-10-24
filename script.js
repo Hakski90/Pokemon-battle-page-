@@ -1,5 +1,5 @@
 let rolling = false;
-let buttonAbove = false;  // Track if the button is above or below
+let awayTeamActive = false;  // Track if the button is above or below
 let homeSelection = [];
 let awaySelection = [];
 
@@ -131,11 +131,13 @@ function rollDice() {
         }
 
         toggleButtonPosition();  // Change the button's position
+		// Toggle evolve button visibility for the attacking team with 50% chance
+		handleEvolveButtonVisibility(getAttackingTeam());
         rolling = false;
     }, 1000);  // The rolling animation lasts for 1 second
 }
 function getAttackingTeam() {
-	if (buttonAbove) {
+	if (awayTeamActive) {
 		return 'away';
 	} else {
 		return 'home';
@@ -237,13 +239,13 @@ function toggleButtonPosition() {
     const diceContainer = document.getElementById('dice-container');
     const button = document.getElementById('roll-btn');
     
-    if (buttonAbove) {
+    if (awayTeamActive) {
         diceContainer.appendChild(button);  // Move button to below the dice
     } else {
         diceContainer.insertBefore(button, diceContainer.firstChild);  // Move button to above the dice
     }
     
-    buttonAbove = !buttonAbove;  // Toggle the state
+    awayTeamActive = !awayTeamActive;  // Toggle the state
 }
 function updateHealthBar(pokemon, team, health) {
     // Find the correct health bar and update its width
@@ -257,6 +259,65 @@ function decreaseHealth(pokemon, team, amount) {
     } else {
         awayTeam[pokemon] = Math.max(awayTeam[pokemon] - amount, 0);
         updateHealthBar(pokemon, 'away', awayTeam[pokemon]);
+    }
+}
+async function getEvolution(currentPokemon) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${currentPokemon}`);
+    const data = await response.json();
+    const evolutionChainUrl = data.evolution_chain.url;
+
+    // Get evolution chain
+    const evolutionResponse = await fetch(evolutionChainUrl);
+    const evolutionData = await evolutionResponse.json();
+
+    // Find the current Pokémon in the evolution chain
+    let chain = evolutionData.chain;
+    while (chain.species.name !== currentPokemon) {
+        if (chain.evolves_to.length === 0) {
+            return null; // No further evolutions
+        }
+        chain = chain.evolves_to[0];
+    }
+
+    // Get the next evolution
+    if (chain.evolves_to.length > 0) {
+        const nextEvolution = chain.evolves_to[0].species.name;
+        return nextEvolution;
+    } else {
+        return null; // No further evolutions
+    }
+}
+
+async function evolvePokemon(pokemonId) {
+    // Get the current Pokémon's name from the image source URL
+    const pokemonImg = document.getElementById(pokemonId);
+    const currentPokemon = pokemonImg.src.split('/').pop().split('.')[0]; // Extract current Pokémon name from URL
+
+    // Fetch the next evolution
+    const nextEvolution = await getEvolution(currentPokemon);
+
+    // If there's an evolution, update the Pokémon image to the new form
+    if (nextEvolution) {
+        pokemonImg.src = `https://img.pokemondb.net/sprites/black-white/anim/normal/${nextEvolution}.gif`;
+    } else {
+        alert(`${currentPokemon} cannot evolve further!`);
+    }
+}
+function handleEvolveButtonVisibility(attackingTeam) {
+    // 50% chance for evolve button to be shown
+    const showEvolveButton = Math.random() < 0.5;  // 50% chance
+
+    // Hide all evolve buttons initially
+    document.querySelectorAll('.evolve-btn').forEach(btn => btn.style.display = 'none');
+
+    // Determine which Pokémon are currently active for the attacking team
+    const activePokemon1 = document.getElementById(`${attackingTeam}Pokemon1`);
+    const activePokemon2 = document.getElementById(`${attackingTeam}Pokemon2`);
+
+    // Randomly decide whether to show the evolve button for the first or second active Pokémon
+    if (showEvolveButton) {
+        const evolveBtnId = Math.random() < 0.5 ? `${attackingTeam}Pokemon1Evolve` : `${attackingTeam}Pokemon2Evolve`;
+        document.getElementById(evolveBtnId).style.display = 'block';  // Show the evolve button for the active Pokémon
     }
 }
 function initiate(){
