@@ -1,5 +1,37 @@
 let homeSelection = [];
 let awaySelection = [];
+const config = window.gameConfig;
+function loadPokemonChoices() {
+    const awayContainer = document.getElementById('away-pokemon-options');
+    const homeContainer = document.getElementById('home-pokemon-options');
+
+    // Clear any existing elements (useful if reload needed)
+    awayContainer.innerHTML = '';
+    homeContainer.innerHTML = '';
+
+    // Dynamically add Pokémon choices based on config
+    gameConfig.pokemonChoices.forEach(pokemon => {
+        const pokemonImageUrl = `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon}.gif`;
+
+        // Create image element for the away team
+        const awayImg = document.createElement('img');
+        awayImg.src = pokemonImageUrl;
+        awayImg.alt = pokemon;
+        awayImg.classList.add('away-pokemon');
+        awayImg.onclick = () => selectPokemonForTeam('away', pokemon);
+        awayContainer.appendChild(awayImg);
+
+        // Create image element for the home team
+        const homeImg = document.createElement('img');
+        homeImg.src = pokemonImageUrl;
+        homeImg.alt = pokemon;
+        homeImg.classList.add('home-pokemon');
+        homeImg.onclick = () => selectPokemonForTeam('home', pokemon);
+        homeContainer.appendChild(homeImg);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadPokemonChoices);
 
 function selectPokemonForTeam(team, pokemon) {
     let teamSelection = team === 'home' ? homeSelection : awaySelection;

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Teams</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+    <script src="config.js"></script>      <!-- Load configuration settings -->
     <script src="common.js"></script>    <!-- Optional if you need the restart button or any common logic -->
     <script src="teamSelection.js"></script>  <!-- Handles team selection -->
 </head>
@@ -14,23 +15,13 @@
     <!-- Away Team Selection -->
     <div class="team-selection">
         <h2>Away Team: Choose 2 Pokémon</h2>
-        <div class="pokemon-options">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif" alt="Squirtle" class="away-pokemon" onclick="selectPokemonForTeam('away', 'squirtle')">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif" alt="Charmander" class="away-pokemon" onclick="selectPokemonForTeam('away', 'charmander')">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" alt="Pikachu" class="away-pokemon" onclick="selectPokemonForTeam('away', 'pikachu')">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" alt="Bulbasaur" class="away-pokemon" onclick="selectPokemonForTeam('away', 'bulbasaur')">
-        </div>
+		<div id="away-pokemon-options" class="pokemon-options"></div> <!-- Dynamic options will be added here -->
     </div>
 
     <!-- Home Team Selection -->
     <div class="team-selection">
         <h2>Home Team: Choose 2 Pokémon</h2>
-        <div class="pokemon-options">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/squirtle.gif" alt="Squirtle" class="home-pokemon" onclick="selectPokemonForTeam('home', 'squirtle')">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif" alt="Charmander" class="home-pokemon" onclick="selectPokemonForTeam('home', 'charmander')">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" alt="Pikachu" class="home-pokemon" onclick="selectPokemonForTeam('home', 'pikachu')">
-            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" alt="Bulbasaur" class="home-pokemon" onclick="selectPokemonForTeam('home', 'bulbasaur')">
-        </div>
+		<div id="home-pokemon-options" class="pokemon-options"></div> <!-- Dynamic options will be added here -->
     </div>
 
     <!-- Start Battle Button -->
