@@ -31,8 +31,8 @@
         // Load saved configuration if it exists
         document.addEventListener("DOMContentLoaded", () => {
             const config = JSON.parse(localStorage.getItem("gameConfig")) || {
-                attackThreshold: 3,
-                dodgeThreshold: 3,
+                attackThreshold: 4,
+                dodgeThreshold: 4,
                 evolutionProbability: 0.5,
                 pokemonChoices: ["charmander", "squirtle", "pikachu", "bulbasaur"]
             };
