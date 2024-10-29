@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Configuration</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="config.js"></script>      <!-- Load configuration settings -->
+</head>
+<body>
+    <h1>Game Configuration</h1>
+    <form id="config-form">
+        <label for="attack-threshold">Attack Threshold (Dice Roll):</label>
+        <input type="number" id="attack-threshold" name="attackThreshold" min="1" max="6" required><br><br>
+
+        <label for="dodge-threshold">Dodge Threshold (Dice Roll):</label>
+        <input type="number" id="dodge-threshold" name="dodgeThreshold" min="1" max="6" required><br><br>
+
+        <label for="evolution-probability">Evolution Probability (0 to 1):</label>
+        <input type="number" id="evolution-probability" name="evolutionProbability" min="0" max="1" step="0.01" required><br><br>
+		
+        <label for="pokemon-choices">Available Pokémon (one per line):</label>
+        <textarea id="pokemon-choices" name="pokemonChoices" rows="4" cols="30" required></textarea><br><br>
+
+        <button type="submit">Save Configuration</button>
+    </form>
+
+    <p><a href="index.html">Back to Game</a></p>
+
+    <script>
+        // Load saved configuration if it exists
+        document.addEventListener("DOMContentLoaded", () => {
+            const config = JSON.parse(localStorage.getItem("gameConfig")) || {
+                attackThreshold: 3,
+                dodgeThreshold: 3,
+                evolutionProbability: 0.5,
+                pokemonChoices: ["charmander", "squirtle", "pikachu", "bulbasaur"]
+            };
+
+            document.getElementById("attack-threshold").value = config.attackThreshold;
+            document.getElementById("dodge-threshold").value = config.dodgeThreshold;
+            document.getElementById("evolution-probability").value = config.evolutionProbability;
+            document.getElementById("pokemon-choices").value = config.pokemonChoices.join("\n");
+        });
+
+        // Save configuration on form submission
+        document.getElementById("config-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const attackThreshold = parseInt(document.getElementById("attack-threshold").value, 10);
+            const dodgeThreshold = parseInt(document.getElementById("dodge-threshold").value, 10);
+            const evolutionProbability = parseFloat(document.getElementById("evolution-probability").value, 0.5);
+            const pokemonChoices = document.getElementById("pokemon-choices").value.split("\n").map(pokemon => pokemon.trim().toLowerCase());
+
+            // Save the configuration to localStorage
+            const config = { attackThreshold, dodgeThreshold, evolutionProbability, pokemonChoices };
+            localStorage.setItem("gameConfig", JSON.stringify(config));
+
+            alert("Configuration saved!");
+        });
+    </script>
+</body>
+</html>

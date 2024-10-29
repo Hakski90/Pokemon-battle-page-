@@ -36,7 +36,7 @@ function rollDice() {
 }
 
 function handleAttackOutcome(finalNumber) {
-    if (finalNumber > gameConfig.attackThreshold) {
+    if (finalNumber >= gameConfig.attackThreshold) {
         // If attack is successful (4, 5, 6), enable defense mode
 		// Display attack icon for 3 seconds before defense roll
         showAttackIcon();
@@ -78,7 +78,7 @@ function handleDefenseOutcome(finalNumber) {
     toggleDefenseRollButton(false);  // Reset roll button after defense roll
     const defendingTeam = awayTeamAttacking ? 'home' : 'away';
 
-    if (finalNumber > gameConfig.dodgeThreshold) {
+    if (finalNumber >= gameConfig.dodgeThreshold) {
 		// Successful dodge, show smiley icon
         showTemporaryIcon('smiley-icon');
         switchTurn(); // Pass turn to the defender

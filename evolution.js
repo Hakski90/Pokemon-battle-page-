@@ -38,10 +38,11 @@ async function evolvePokemon(pokemonId) {
 			alert(`${currentPokemon} cannot evolve further!`);
 		}
 	}
+	document.querySelectorAll('.evolve-btn').forEach(btn => btn.style.display = 'none');
 }
 
 function handleEvolveButtonVisibility(attackingTeam) {
-    const showEvolveButton = Math.random() < 0.5;
+    const showEvolveButton = Math.random() < gameConfig.evolutionProbability;
 
     document.querySelectorAll('.evolve-btn').forEach(btn => btn.style.display = 'none');
 

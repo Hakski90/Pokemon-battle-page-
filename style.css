@@ -183,6 +183,22 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+/* Add this to your style.css or within a <style> tag */
+.settings-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.settings-icon:hover {
+    color: #007bff;  /* Change color on hover */
+}
+
+
 /* Enhanced Fireworks Animation */
 .fireworks-container {
     position: absolute;
