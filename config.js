@@ -8,9 +8,9 @@ window.gameConfig = {
         'charmander',
         'squirtle',
         'pikachu',
-        'bulbasaur',
-		'meowth',
-		'abra'
+        'bulbasaur'
+		//'meowth',
+		//'abra'
     ]
 };
 
