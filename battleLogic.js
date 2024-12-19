@@ -199,6 +199,31 @@ function decreaseHealth(pokemon, team, amount) {
         updateHealthBar(pokemon, 'away', awayTeam[pokemon]);
     }
 }
+async function updatePokemonData(pokemonName) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+  const data = await response.json();
+
+  // Update HP
+  const hpStat = data.stats.find(stat => stat.stat.name === 'hp').base_stat;
+  pokemonHp.textContent = `HP: ${hpStat}`;
+
+  // Update Moves (get the first two moves with power)
+  let moveDetails = 'Moves: ';
+  let moveCount = 0;
+  for (let move of data.moves) {
+	if (moveCount >= 2) break; // Get only 2 moves
+
+	const moveResponse = await fetch(move.move.url);
+	const moveData = await moveResponse.json();
+
+	// Ensure the move has a power value (some moves like status moves don't)
+	if (moveData.power) {
+	  moveDetails += `${moveData.name} (Power: ${moveData.power}), `;
+	  moveCount++;
+	}
+  }
+  pokemonMoves.textContent = moveDetails.slice(0, -2); // Remove trailing comma
+}
 
 function initiate() {
     const dots = document.querySelectorAll('.dot');

@@ -11,9 +11,13 @@ function loadPokemonChoices() {
 
     // Dynamically add Pokémon choices based on config
     gameConfig.pokemonChoices.forEach(pokemon => {
-        const pokemonImageUrl = `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon}.gif`;
-
-        // Create image element for the away team
+        //const pokemonImageUrl = `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon}.gif`;
+		const pokemonImageUrl = `https://img.pokemondb.net/sprites/sword-shield/normal/${pokemon}.png`;
+		const imageExists = checkPokemonImageURL(pokemonImageUrl);
+		if (!imageExists) {
+			const pokemonImageUrl = `https://img.pokemondb.net/sprites/ultra-sun-ultra-moon/normal/${pokemon}.png`;
+		}	
+		// Create image element for the away team
         const awayImg = document.createElement('img');
         awayImg.src = pokemonImageUrl;
         awayImg.alt = pokemon;
@@ -32,6 +36,21 @@ function loadPokemonChoices() {
 }
 
 document.addEventListener('DOMContentLoaded', loadPokemonChoices);
+function checkPokemonImageURL(imageUrl) {
+    return new Promise((resolve) => {
+        const img = new Image();
+
+        img.onload = function() {
+            resolve(true);
+        };
+
+        img.onerror = function() {
+            resolve(false);
+        };
+
+        img.src = imageUrl;
+    });
+}
 
 function selectPokemonForTeam(team, pokemon) {
     let teamSelection = team === 'home' ? homeSelection : awaySelection;
