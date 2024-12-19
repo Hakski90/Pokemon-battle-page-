@@ -85,8 +85,9 @@ function startBattle() {
     window.location.href = 'battle.html';  // Redirect to battle screen
 }
 function selectPokemon(team, pokemon, imgElementId) {
-    const pokemonImageUrl = `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon}.gif`;
-    document.getElementById(imgElementId).src = pokemonImageUrl;
+    //const pokemonImageUrl = `https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon}.gif`;
+    const pokemonImageUrl = `https://img.pokemondb.net/sprites/sword-shield/normal/${pokemon}.png`;
+	document.getElementById(imgElementId).src = pokemonImageUrl;
 }
 function loadSelectedTeams() {
     const homeTeamSelected = JSON.parse(localStorage.getItem('homeTeam'));
